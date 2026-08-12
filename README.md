@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain and Mind Academy - Micro-Learning Progressive Sheet: Heights and Distances</title>
+    <style>
+        :root {
+            --primary-header: #1e3a8a;
+            --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            --accent-gold: #d97706;
+            --accent-gold-light: #fcd34d;
+            --correct-green: #059669;
+            --correct-bg: #d1fae5;
+            --incorrect-red: #dc2626;
+            --incorrect-bg: #fee2e2;
+            --skipped-orange: #f59e0b;
+            --skipped-bg: #fef3c7;
+            --bg-body: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .brand-subtitle {
+            font-size: 0.9rem;
+            color: var(--accent-gold-light);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-email {
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .btn {
+            padding: 0.6rem 1.25rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.85rem;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+
+        .btn-primary { background-color: var(--primary-header); color: white; }
+        .btn-primary:hover { background-color: #172554; }
+        .btn-gold { background-color: var(--accent-gold); color: white; }
+        .btn-gold:hover { background-color: #b45309; }
+        .btn-outline { background: transparent; border: 1.5px solid var(--border-color); color: var(--text-dark); }
+        .btn-outline:hover { background-color: #f1f5f9; }
+        .btn-danger { background-color: var(--incorrect-red); color: white; }
+        .btn-danger:hover { background-color: #b91c1c; }
+        .btn-success { background-color: var(--correct-green); color: white; }
+        .btn-success:hover { background-color: #047857; }
+
+        .screen {
+            display: none;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        .screen.active { display: block; }
+
+        #auth-screen {
+            max-width: 450px;
+            margin: auto;
+            padding-top: 4rem;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .auth-card h2 { margin-bottom: 0.5rem; color: var(--primary-header); }
+        .auth-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        .form-group { margin-bottom: 1.25rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; }
+        .form-group input {
+            width: 100%; padding: 0.75rem; border: 1px solid var(--border-color);
+            border-radius: 6px; font-size: 1rem; outline: none;
+        }
+        .form-group input:focus { border-color: var(--primary-header); box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
+
+        #video-screen { max-width: 850px; margin: auto; }
+        .video-card {
+            background: var(--card-bg); padding: 2rem; border-radius: 12px;
+            border: 1px solid var(--border-color); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); text-align: center;
+        }
+        .video-wrapper {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            border-radius: 8px; margin: 1.5rem 0; background: #000;
+        }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--bg-body);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .q-badge {
+            background: #eff6ff;
+            color: var(--primary-header);
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .q-title {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--primary-header);
+        }
+
+        .problem-statement {
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary-header);
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Micro Step Blocks */
+        .step-block {
+            background: #f8fafc;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-block.locked {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(0.8);
+        }
+
+        .step-block.active-step {
+            border-color: var(--primary-header);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .step-block.completed-step {
+            border-color: var(--correct-green);
+            background-color: #f0fdf4;
+        }
+
+        .step-block.skipped-step {
+            border-color: var(--skipped-orange);
+            background-color: var(--skipped-bg);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-tag {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-gold);
+        }
+
+        .completed-step .step-tag { color: var(--correct-green); }
+        .skipped-step .step-tag { color: var(--skipped-orange); }
+
+        .step-prompt {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .step-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        /* Diagram Options Grid */
+        .diagram-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram-option {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .diagram-option:hover:not(.disabled) {
+            border-color: var(--primary-header);
+            background-color: #eff6ff;
+        }
+
+        .diagram-option.selected {
+            border-color: var(--primary-header);
+            background-color: #eff6ff;
+        }
+
+        .diagram-option.correct {
+            border-color: var(--correct-green);
+            background-color: var(--correct-bg);
+        }
+
+        .diagram-option.incorrect {
+            border-color: var(--incorrect-red);
+            background-color: var(--incorrect-bg);
+        }
+
+        .diagram-option.disabled { cursor: default; }
+
+        /* Choice Options List */
+        .step-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-option-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .step-option-item:hover:not(.disabled) {
+            border-color: var(--primary-header);
+            background-color: #eff6ff;
+        }
+
+        .step-option-item.selected {
+            border-color: var(--primary-header);
+            background-color: #eff6ff;
+        }
+
+        .step-option-item.correct {
+            border-color: var(--correct-green);
+            background-color: var(--correct-bg);
+            color: #065f46;
+        }
+
+        .step-option-item.incorrect {
+            border-color: var(--incorrect-red);
+            background-color: var(--incorrect-bg);
+            color: #991b1b;
+        }
+
+        .step-option-item.disabled { cursor: default; }
+
+        .step-opt-prefix {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .step-option-item.selected .step-opt-prefix { background: var(--primary-header); color: white; }
+        .step-option-item.correct .step-opt-prefix { background: var(--correct-green); color: white; }
+        .step-option-item.incorrect .step-opt-prefix { background: var(--incorrect-red); color: white; }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .rationale-box {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 8px;
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary-header);
+        }
+
+        .rationale-title { font-weight: 700; color: var(--primary-header); margin-bottom: 0.5rem; }
+
+        .quiz-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-header);
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+        }
+
+        .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+        .dot-active { border: 2px solid var(--primary-header); background: transparent; }
+        .dot-attempted { background: var(--correct-green); }
+        .dot-skipped { background: var(--skipped-orange); }
+        .dot-unvisited { background: #cbd5e1; }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .grid-btn {
+            aspect-ratio: 1; border: 1px solid var(--border-color); background: #f8fafc;
+            color: var(--text-dark); border-radius: 6px; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.15s ease;
+        }
+
+        .grid-btn.active { border: 2px solid var(--primary-header); color: var(--primary-header); font-weight: 800; background: #eff6ff; }
+        .grid-btn.attempted { background: var(--correct-green); color: white; border-color: var(--correct-green); }
+        .grid-btn.skipped { background: var(--skipped-orange); color: white; border-color: var(--skipped-orange); }
+
+        /* Calculator Styling */
+        .calc-display {
+            width: 100%;
+            padding: 0.6rem;
+            font-size: 1.2rem;
+            text-align: right;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            background: #f8fafc;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.35rem;
+        }
+
+        .calc-btn {
+            padding: 0.55rem 0.2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .calc-btn:hover { background: #e2e8f0; }
+        .calc-btn.op { background: #eff6ff; color: var(--primary-header); }
+        .calc-btn.special { background: var(--skipped-bg); color: var(--accent-gold); }
+
+        .results-summary {
+            background: var(--card-bg); border-radius: 12px; padding: 2rem;
+            border: 1px solid var(--border-color); margin-bottom: 2rem; text-align: center;
+        }
+
+        .score-circle {
+            width: 130px; height: 130px; border-radius: 50%; background: var(--header-gradient);
+            color: white; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; margin: 1rem auto;
+        }
+
+        .score-num { font-size: 2.2rem; font-weight: 800; color: var(--accent-gold-light); }
+        .review-list { display: flex; flex-direction: column; gap: 1.5rem; }
+        .review-card { background: var(--card-bg); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border-color); }
+
+        .status-tag {
+            padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem;
+            font-weight: 700; text-transform: uppercase;
+        }
+
+        .tag-correct { background: var(--correct-bg); color: #065f46; }
+        .tag-incorrect { background: var(--incorrect-bg); color: #991b1b; }
+        .tag-skipped { background: var(--skipped-bg); color: #92400e; }
+
+        @media (max-width: 992px) {
+            .quiz-container { grid-template-columns: 1fr; }
+            .quiz-sidebar { position: static; }
+            .diagram-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <div class="brand-title">BRAIN AND MIND ACADEMY</div>
+            <div class="brand-subtitle">Heights and Distances • Multi-Step Interactive Cards (NCERT Class 10 Math)</div>
+        </div>
+        <div class="user-info" id="user-header-info" style="display: none;">
+            <span class="user-email" id="display-user-email"></span>
+            <button class="btn btn-outline" style="color:white; border-color:rgba(255,255,255,0.3);" onclick="logout()">Switch User</button>
+        </div>
+    </header>
+
+    <!-- Auth Screen -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-card">
+            <h2>Student Portal</h2>
+            <p>Enter your email address to access your interactive step-by-step learning card sheet.</p>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email-input">Email ID</label>
+                    <input type="email" id="email-input" required placeholder="student@school.com">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Start Progressive Sheet</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Video Gate Screen -->
+    <div id="video-screen" class="screen">
+        <div class="video-card">
+            <h2 style="color: var(--primary-header);">Khan Academy Lesson: Heights and Distances</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Watch the concept lesson video before attempting the progressive step-by-step practice sheet.</p>
+            
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/videoseries?list=PL108D...&v=2O...&embed_config=..." title="Heights and Distances" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}span{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}</style><a href='https://www.khanacademy.org/math/ncert-class-10/xd6a17b08edbd2443:some-applications-of-trigonometry-ncert-new/xd6a17b08edbd2443:heights-and-distances/v/intro-to-heights-and-distances?referrer=share_link' target='_blank'><span>▶ Click to Watch on Khan Academy</span></a>"></iframe>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                <p style="font-weight: 600; margin-bottom: 1rem; color: var(--text-dark);">Have you watched the Khan Academy concept video?</p>
+                <button class="btn btn-success" style="font-size: 1rem; padding: 0.75rem 2rem;" onclick="approveVideoAndStart()">Yes, I have watched the video & I'm ready! &rarr;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="screen">
+        <div class="quiz-container">
+            <div class="quiz-card">
+                <div class="quiz-header">
+                    <span class="q-badge" id="q-number-badge">Card 1 of 23</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Interactive Step-by-Step Card</span>
+                </div>
+
+                <div class="q-title" id="q-title-text"></div>
+                <div class="problem-statement" id="q-problem-text"></div>
+
+                <!-- STEP 1 BLOCK: Diagram Selection -->
+                <div class="step-block active-step" id="step1-block">
+                    <div class="step-header">
+                        <span class="step-tag">Step 1: Diagram Choice</span>
+                        <span id="step1-status-tag" style="font-weight:700; font-size:0.8rem; color:var(--accent-gold);">In Progress</span>
+                    </div>
+                    <div class="step-prompt" id="step1-prompt">Select the correct geometric diagram that models this scenario:</div>
+                    <div class="diagram-grid" id="step1-diagram-grid"></div>
+                    <div class="step-actions" id="step1-actions">
+                        <button class="btn btn-primary btn-sm" onclick="checkStep(1)">Check Step 1</button>
+                        <button class="btn btn-gold btn-sm" onclick="skipStep(1)">Skip Step 1</button>
+                    </div>
+                </div>
+
+                <!-- STEP 2 BLOCK: Trig Ratio & Equation Formulation -->
+                <div class="step-block locked" id="step2-block">
+                    <div class="step-header">
+                        <span class="step-tag">Step 2: Equation Setup</span>
+                        <span id="step2-status-tag" style="font-weight:700; font-size:0.8rem; color:var(--text-muted);">Locked</span>
+                    </div>
+                    <div class="step-prompt" id="step2-prompt">Formulate the correct trigonometric equation:</div>
+                    <div class="step-options-list" id="step2-options-container"></div>
+                    <div class="step-actions" id="step2-actions" style="display:none;">
+                        <button class="btn btn-primary btn-sm" onclick="checkStep(2)">Check Step 2</button>
+                        <button class="btn btn-gold btn-sm" onclick="skipStep(2)">Skip Step 2</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3 BLOCK: Calculation & Final Answer -->
+                <div class="step-block locked" id="step3-block">
+                    <div class="step-header">
+                        <span class="step-tag">Step 3: Final Calculation</span>
+                        <span id="step3-status-tag" style="font-weight:700; font-size:0.8rem; color:var(--text-muted);">Locked</span>
+                    </div>
+                    <div class="step-prompt" id="step3-prompt">Solve the equation to find the required height/distance:</div>
+                    <div class="step-options-list" id="step3-options-container"></div>
+                    <div class="step-actions" id="step3-actions" style="display:none;">
+                        <button class="btn btn-primary btn-sm" onclick="checkStep(3)">Check Step 3</button>
+                        <button class="btn btn-gold btn-sm" onclick="skipStep(3)">Skip Step 3</button>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-danger" id="skip-card-btn" onclick="skipEntireCard()">Skip Entire Card</button>
+                    <button class="btn btn-outline" id="next-btn" style="display: none;" onclick="nextQuestion()">Next Card &rarr;</button>
+                </div>
+
+                <div class="rationale-box" id="rationale-container" style="display: none;">
+                    <div class="rationale-title">Complete Step-by-Step Solution Summary</div>
+                    <div id="rationale-text" style="font-size: 0.95rem; line-height: 1.6;"></div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="quiz-sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-title">Card Palette (1–23)</div>
+                    <div class="legend-grid">
+                        <div class="legend-item"><div class="legend-dot dot-active"></div> Active</div>
+                        <div class="legend-item"><div class="legend-dot dot-attempted"></div> Submitted</div>
+                        <div class="legend-item"><div class="legend-dot dot-skipped"></div> Skipped</div>
+                        <div class="legend-item"><div class="legend-dot dot-unvisited"></div> Unvisited</div>
+                    </div>
+                    <div class="question-grid" id="question-grid"></div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-danger" style="width: 100%;" onclick="finishTest()">Finish & Submit Sheet</button>
+                    </div>
+                </div>
+
+                <!-- Scientific Calculator with Square Root -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title" style="margin-bottom:0.5rem;">Trig & Root Calculator</div>
+                    <input type="text" class="calc-display" id="calc-disp" readonly value="0">
+                    <div class="calc-grid">
+                        <button class="calc-btn special" onclick="calcTrig('sin')">sin</button>
+                        <button class="calc-btn special" onclick="calcTrig('cos')">cos</button>
+                        <button class="calc-btn special" onclick="calcTrig('tan')">tan</button>
+                        <button class="calc-btn op" onclick="calcClear()">C</button>
+
+                        <button class="calc-btn special" onclick="calcSqrt()">√x</button>
+                        <button class="calc-btn special" onclick="calcVal(1.732)">√3</button>
+                        <button class="calc-btn special" onclick="calcVal(1.414)">√2</button>
+                        <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+                        
+                        <button class="calc-btn" onclick="calcInput('7')">7</button>
+                        <button class="calc-btn" onclick="calcInput('8')">8</button>
+                        <button class="calc-btn" onclick="calcInput('9')">9</button>
+                        <button class="calc-btn op" onclick="calcInput('*')">×</button>
+                        
+                        <button class="calc-btn" onclick="calcInput('4')">4</button>
+                        <button class="calc-btn" onclick="calcInput('5')">5</button>
+                        <button class="calc-btn" onclick="calcInput('6')">6</button>
+                        <button class="calc-btn op" onclick="calcInput('-')">-</button>
+                        
+                        <button class="calc-btn" onclick="calcInput('1')">1</button>
+                        <button class="calc-btn" onclick="calcInput('2')">2</button>
+                        <button class="calc-btn" onclick="calcInput('3')">3</button>
+                        <button class="calc-btn op" onclick="calcInput('+')">+</button>
+                        
+                        <button class="calc-btn" onclick="calcInput('0')">0</button>
+                        <button class="calc-btn" onclick="calcInput('.')">.</button>
+                        <button class="calc-btn op" style="grid-column: span 2;" onclick="calcEval()">=</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Screen -->
+    <div id="review-screen" class="screen">
+        <div class="results-summary">
+            <h2>Performance Summary</h2>
+            <div class="score-circle">
+                <span class="score-num" id="final-score">0 / 23</span>
+                <span style="font-size: 0.8rem; opacity: 0.8;">Score</span>
+            </div>
+            <button class="btn btn-primary" onclick="restartQuiz()">Retake Sheet</button>
+        </div>
+
+        <h3 style="margin-bottom: 1rem; color: var(--primary-header);">Micro-Learning Progressive Answer Sheet Review</h3>
+        <div class="review-list" id="review-list"></div>
+    </div>
+
+    <script>
+        const AudioFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+            playCorrectBell() {
+                this.init();
+                const now = this.ctx.currentTime;
+                const playSingleBell = (freq, time, duration) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, time);
+
+                    gain.gain.setValueAtTime(0, time);
+                    gain.gain.linearRampToValueAtTime(0.3, time + 0.01);
+                    gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+
+                    osc.start(time);
+                    osc.stop(time + duration);
+                };
+
+                playSingleBell(880, now, 0.8);        
+                playSingleBell(1318.51, now + 0.12, 1.2); 
+            },
+            playIncorrectBell() {
+                this.init();
+                const now = this.ctx.currentTime;
+
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220, now); 
+
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.35, now + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.6);
+            },
+            playSkipChime() {
+                this.init();
+                const now = this.ctx.currentTime;
+
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); 
+                osc.frequency.exponentialRampToValueAtTime(392, now + 0.15); 
+
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.15);
+            }
+        };
+
+        const CHAPTER_KEY = "CHAPTER_TRIGONOMETRY_STEP_CHECK_SKIP_CARDS";
+
+        // SVG Diagram Generator Functions
+        const makeSVG = (type, param) => {
+            if (type === 'right_triangle') {
+                const angle = param.angle || '60°';
+                const base = param.base || '15 m';
+                const height = param.height || 'h';
+                const hyp = param.hyp || '';
+                return `<svg width="180" height="110" viewBox="0 0 200 120">
+                    <line x1="20" y1="100" x2="170" y2="100" stroke="#333" stroke-width="2"/>
+                    <line x1="170" y1="100" x2="170" y2="20" stroke="#1e3a8a" stroke-width="3"/>
+                    <line x1="20" y1="100" x2="170" y2="20" stroke="#dc2626" stroke-width="2"/>
+                    <text x="175" y="65" font-size="11" font-weight="bold" fill="#1e3a8a">${height}</text>
+                    <text x="80" y="115" font-size="11" font-weight="bold" fill="#333">${base}</text>
+                    <text x="45" y="95" font-size="10" font-weight="bold" fill="#dc2626">${angle}</text>
+                    ${hyp ? `<text x="80" y="55" font-size="10" font-weight="bold" fill="#d97706">${hyp}</text>` : ''}
+                </svg>`;
+            }
+            if (type === 'double_triangle') {
+                const a1 = param.a1 || '30°';
+                const a2 = param.a2 || '60°';
+                const dist = param.dist || '40 m';
+                const h = param.h || 'h';
+                return `<svg width="200" height="110" viewBox="0 0 220 120">
+                    <line x1="10" y1="100" x2="200" y2="100" stroke="#333" stroke-width="2"/>
+                    <line x1="200" y1="100" x2="200" y2="20" stroke="#1e3a8a" stroke-width="3"/>
+                    <line x1="120" y1="100" x2="200" y2="20" stroke="#d97706" stroke-width="2"/>
+                    <line x1="20" y1="100" x2="200" y2="20" stroke="#dc2626" stroke-width="2"/>
+                    <text x="205" y="65" font-size="11" font-weight="bold" fill="#1e3a8a">${h}</text>
+                    <text x="50" y="115" font-size="10" font-weight="bold" fill="#333">${dist}</text>
+                    <text x="35" y="95" font-size="9" fill="#dc2626">${a1}</text>
+                    <text x="135" y="95" font-size="9" fill="#d97706">${a2}</text>
+                </svg>`;
+            }
+            return `<svg width="180" height="110" viewBox="0 0 200 120"><rect x="10" y="10" width="180" height="100" fill="#f1f5f9"/><text x="50" y="60" font-size="12">Diagram ${type}</text></svg>`;
+        };
+
+        // ALL 23 NCERT Chapter 9 Questions structured with Step 1, Step 2, and Step 3
+        const questionsData = [
+            // Card 1
+            {
+                id: 1,
+                title: "Card 1 (NCERT Example 1): Tower Height Calculation",
+                problem: "A tower stands vertically on the ground. From a point on the ground, which is 15 m away from the foot of the tower, the angle of elevation of the top of the tower is found to be 60°. Find the height of the tower.",
+                step1: {
+                    prompt: "Select the correct geometric diagram representing the tower, distance, and 60° angle of elevation:",
+                    diagrams: [
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '15 m', height: 'AB'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '15 m', height: 'AB'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '30 m', height: 'AB'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°', dist: '15 m'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Formulate the correct trigonometric ratio relating height AB and distance BC = 15 m:",
+                    options: [
+                        "sin 60° = AB / 15",
+                        "tan 60° = AB / 15",
+                        "cos 60° = 15 / AB",
+                        "tan 60° = 15 / AB"
+                    ],
+                    correct: 1
+                },
+                step3: {
+                    prompt: "Solve the equation: tan 60° = AB / 15  ⇒  √3 = AB / 15  ⇒  AB = [ _____ ] m.",
+                    options: ["15 m", "15√3 m", "30 m", "15 / √3 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) In right △ABC, tan 60° = Opposite / Adjacent = AB / BC.<br>2) √3 = AB / 15.<br>3) AB = 15√3 m."
+            },
+            // Card 2
+            {
+                id: 2,
+                title: "Card 2 (NCERT Example 2): Electrician's Ladder Length",
+                problem: "An electrician has to repair a fault on a 5 m tall pole. She needs to reach a point 1.3 m below the top (BD = 3.7 m). The ladder is inclined at 60° to the horizontal.",
+                step1: {
+                    prompt: "Select the correct diagram representing pole height BD = 3.7 m and ladder BC inclined at 60°:",
+                    diagrams: [
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'DC', height: '3.7m', hyp: 'BC'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 'DC', height: '3.7m', hyp: 'Ladder BC'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '5m', height: '3.7m'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '60°', a2: '45°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Formulate the trigonometric equation to find ladder length BC (hypotenuse):",
+                    options: [
+                        "cos 60° = 3.7 / BC",
+                        "sin 60° = 3.7 / BC",
+                        "tan 60° = 3.7 / BC",
+                        "sin 60° = BC / 3.7"
+                    ],
+                    correct: 1
+                },
+                step3: {
+                    prompt: "Calculate ladder length BC: sin 60° = 3.7 / BC  ⇒  √3 / 2 = 3.7 / BC  ⇒  BC ≈ [ _____ ] m (taking √3 = 1.73).",
+                    options: ["3.7 m", "4.28 m", "2.14 m", "5.0 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) BD = 5 - 1.3 = 3.7 m.<br>2) sin 60° = BD / BC ⇒ √3 / 2 = 3.7 / BC.<br>3) BC = 7.4 / 1.73 ≈ 4.28 m."
+            },
+            // Card 3
+            {
+                id: 3,
+                title: "Card 3 (NCERT Example 3): Height of a Chimney",
+                problem: "An observer 1.5 m tall is 28.5 m away from a chimney. The angle of elevation of the top of the chimney from her eyes is 45°.",
+                step1: {
+                    prompt: "Select the diagram showing observer eye level DE = 28.5 m and 45° angle of elevation:",
+                    diagrams: [
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '28.5m', height: 'AE'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '28.5m', height: 'AE'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '1.5m', height: 'AE'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Formulate the equation for upper chimney height AE using tan 45°:",
+                    options: [
+                        "sin 45° = AE / 28.5",
+                        "tan 45° = AE / 28.5",
+                        "cos 45° = AE / 28.5",
+                        "tan 45° = 28.5 / AE"
+                    ],
+                    correct: 1
+                },
+                step3: {
+                    prompt: "Calculate total chimney height AB = AE + observer height = 28.5 + 1.5 = [ _____ ] m.",
+                    options: ["28.5 m", "30 m", "27 m", "31.5 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) tan 45° = AE / 28.5 ⇒ 1 = AE / 28.5 ⇒ AE = 28.5 m.<br>2) Total Height AB = 28.5 + 1.5 = 30 m."
+            },
+            // Card 4
+            {
+                id: 4,
+                title: "Card 4 (NCERT Example 4): Flagstaff Length & Building Distance",
+                problem: "From a point P on the ground, angle of elevation of top of a 10 m building is 30°. Elevation of top of a flagstaff on the building is 45°.",
+                step1: {
+                    prompt: "Select the diagram showing building AB = 10 m, flagstaff x, and angles 30° & 45°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '45°', dist: 'AP', h: '10+x'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'AP', height: '10m'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: 'AP', height: 'x'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "First find AP: tan 30° = 10 / AP  ⇒  1/√3 = 10 / AP  ⇒  AP = 10√3 m (17.32 m). Then set up flagstaff equation using tan 45°:",
+                    options: [
+                        "tan 45° = x / 17.32",
+                        "tan 45° = (10 + x) / 10√3",
+                        "sin 45° = (10 + x) / 10√3",
+                        "cos 45° = 10 / (10 + x)"
+                    ],
+                    correct: 1
+                },
+                step3: {
+                    prompt: "Solve tan 45° = (10 + x) / 10√3  ⇒  1 = (10 + x) / 17.32  ⇒  x = [ _____ ] m.",
+                    options: ["10 m", "7.32 m", "17.32 m", "5 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) AP = 10√3 = 17.32 m.<br>2) tan 45° = (10 + x) / 17.32 = 1 ⇒ 10 + x = 17.32.<br>3) x = 7.32 m."
+            },
+            // Card 5
+            {
+                id: 5,
+                title: "Card 5 (NCERT Example 5): Tower Shadow Comparison",
+                problem: "The shadow of a tower is 40 m longer when the Sun's altitude is 30° than when it is 60°. Find the height of the tower.",
+                step1: {
+                    prompt: "Select the diagram showing tower height h, initial shadow x (60°), and extended shadow x + 40 (30°):",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°', dist: '40 m', h: 'h'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '40m', height: 'h'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '40m', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Express h in terms of x: h = x tan 60° = x√3. Substitute into tan 30° = h / (x + 40):",
+                    options: [
+                        "1/√3 = (x√3) / (x + 40)",
+                        "√3 = (x√3) / (x + 40)",
+                        "1/2 = x / (x + 40)",
+                        "1/√3 = 40 / x"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Solve 1/√3 = (x√3) / (x + 40)  ⇒  x + 40 = 3x  ⇒  2x = 40  ⇒  x = 20 m. Thus height h = [ _____ ] m.",
+                    options: ["20 m", "20√3 m", "40 m", "40√3 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) h = x√3.<br>2) 1/√3 = x√3 / (x + 40) ⇒ x + 40 = 3x ⇒ x = 20 m.<br>3) Height h = 20√3 m."
+            },
+            // Card 6
+            {
+                id: 6,
+                title: "Card 6 (NCERT Example 6): Multi-Storeyed Building & 8m Building",
+                problem: "The angles of depression of top and bottom of an 8 m building from the top of a multi-storeyed building are 30° and 45°.",
+                step1: {
+                    prompt: "Select the diagram showing multi-storeyed building PC, 8 m building AB, and alternate angles 30° & 45°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '30°', dist: '8m', h: 'PC'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: 'AC', height: '8m'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'BD', height: 'PD'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '60°', a2: '30°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Set up equations for PD: BD = PD√3 and AC = PC = PD + 8. Since BD = AC, PD√3 = PD + 8:",
+                    options: [
+                        "PD(√3 - 1) = 8",
+                        "PD(√3 + 1) = 8",
+                        "PD = 8√3",
+                        "PD / √3 = 8"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Solve PD = 8 / (√3 - 1) = 4(√3 + 1) m. Total height PC = 4(√3 + 1) + 8 = [ _____ ] m.",
+                    options: ["4(3 + √3) m", "8(√3 + 1) m", "12√3 m", "16 m"],
+                    correct: 0
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) PD = 8 / (√3 - 1) = 4(√3 + 1) m.<br>2) Total height PC = 4√3 + 4 + 8 = 4(3 + √3) m."
+            },
+            // Card 7
+            {
+                id: 7,
+                title: "Card 7 (NCERT Example 7): River Width from Bridge",
+                problem: "From a bridge 3 m above a river, angles of depression of banks on opposite sides are 30° and 45°. Find river width.",
+                step1: {
+                    prompt: "Select the diagram showing bridge height DP = 3 m and depression angles 30° & 45° to banks A & B:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '45°', dist: '3m', h: 'River AB'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '3m', height: 'AB'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '3m', height: 'AB'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '60°', a2: '30°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Find bank segments AD and DB: AD = 3 / tan 30° = 3√3 m, DB = 3 / tan 45° = 3 m. Total width AB = AD + DB:",
+                    options: [
+                        "AB = 3√3 + 3 = 3(√3 + 1) m",
+                        "AB = 3√3 - 3 m",
+                        "AB = 6√3 m",
+                        "AB = 6 m"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Calculate final river width AB = 3(√3 + 1) = [ _____ ] m.",
+                    options: ["3(√3 + 1) m", "6 m", "3√3 m", "8.19 m"],
+                    correct: 0
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) AD = 3 / (1/√3) = 3√3 m.<br>2) DB = 3 / 1 = 3 m.<br>3) River Width AB = 3(√3 + 1) m."
+            },
+
+            // Exercise 9.1 Questions
+            // Card 8
+            {
+                id: 8,
+                title: "Card 8 (Exercise 9.1 Q1): Circus Artist Rope Climbing",
+                problem: "A circus artist is climbing a 20 m long rope tightly tied from top of vertical pole to ground at 30° angle. Find pole height.",
+                step1: {
+                    prompt: "Select the diagram showing rope hypotenuse = 20 m, angle = 30°, and pole height h:",
+                    diagrams: [
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'Base', height: 'h', hyp: 'Rope=20m'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 'Base', height: 'h', hyp: '20m'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '20m', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Formulate sine ratio equation for pole height h:",
+                    options: [
+                        "cos 30° = h / 20",
+                        "sin 30° = h / 20",
+                        "tan 30° = h / 20",
+                        "sin 30° = 20 / h"
+                    ],
+                    correct: 1
+                },
+                step3: {
+                    prompt: "Solve sin 30° = h / 20  ⇒  1/2 = h / 20  ⇒  h = [ _____ ] m.",
+                    options: ["20 m", "10 m", "10√3 m", "5 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) sin 30° = Opposite / Hypotenuse = h / 20.<br>2) 1/2 = h / 20 ⇒ h = 10 m."
+            },
+            // Card 9
+            {
+                id: 9,
+                title: "Card 9 (Exercise 9.1 Q2): Storm-Broken Tree",
+                problem: "A tree breaks due to storm, top bends touching ground at 30° angle, 8 m from foot. Find total height of tree.",
+                step1: {
+                    prompt: "Select the diagram showing unbroken part x, broken part y, base = 8 m, and angle = 30°:",
+                    diagrams: [
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '8 m', height: 'x', hyp: 'y'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '8 m', height: 'x'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'x', height: '8m'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '45°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Formulate equations for x and y: tan 30° = x / 8  ⇒  x = 8/√3 m, and cos 30° = 8 / y  ⇒  y = 16/√3 m. Total height = x + y:",
+                    options: [
+                        "Total Height = 8/√3 + 16/√3 = 24/√3 m",
+                        "Total Height = 8 + 16 = 24 m",
+                        "Total Height = 8√3 + 16 m",
+                        "Total Height = 12/√3 m"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Simplify 24 / √3 = (24√3) / 3 = [ _____ ] m.",
+                    options: ["8 m", "8√3 m", "16√3 m", "24 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) x = 8/√3 m, y = 16/√3 m.<br>2) Total Height = 24 / √3 = 8√3 m."
+            },
+            // Card 10
+            {
+                id: 10,
+                title: "Card 10 (Exercise 9.1 Q3): Contractor Playground Slides",
+                problem: "Contractor installs two slides: Slide 1 (under 5 yrs) height 1.5 m at 30° angle. Slide 2 (elder) height 3 m at 60° angle.",
+                step1: {
+                    prompt: "Select the diagram showing both slide right triangles (1.5 m @ 30° and 3 m @ 60°):",
+                    diagrams: [
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'Base', height: '1.5m', hyp: 'S1'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 'Base', height: '1.5m'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '3m', height: '3m'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Formulate equations: Slide 1 = 1.5 / sin 30° = 3 m. Slide 2 length = 3 / sin 60°:",
+                    options: [
+                        "Slide 2 = 3 / (√3/2) = 6 / √3 m",
+                        "Slide 2 = 3 / (1/2) = 6 m",
+                        "Slide 2 = 3 × √3 = 3√3 m",
+                        "Slide 2 = 3 / (1/√3) = 3√3 m"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Simplify Slide 2 length = 6 / √3 = [ _____ ] m.",
+                    options: ["3 m", "2√3 m", "6 m", "√3 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) Slide 1 = 1.5 / 0.5 = 3 m.<br>2) Slide 2 = 6 / √3 = 2√3 m."
+            },
+            // Card 11
+            {
+                id: 11,
+                title: "Card 11 (Exercise 9.1 Q4): Tower Height from 30m Distance",
+                problem: "Angle of elevation of top of tower from a point 30 m away from foot is 30°. Find height of tower.",
+                step1: {
+                    prompt: "Select the diagram showing base = 30 m, angle = 30°, and height h:",
+                    diagrams: [
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '30 m', height: 'h'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '30 m', height: 'h'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'h', height: '30m'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '45°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Formulate tangent ratio equation: tan 30° = h / 30:",
+                    options: [
+                        "1/√3 = h / 30",
+                        "√3 = h / 30",
+                        "1/2 = h / 30",
+                        "1/√3 = 30 / h"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Solve h = 30 / √3 = [ _____ ] m.",
+                    options: ["30 m", "10√3 m", "10 m", "30√3 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) tan 30° = h / 30 ⇒ 1/√3 = h / 30.<br>2) h = 30 / √3 = 10√3 m."
+            },
+            // Card 12
+            {
+                id: 12,
+                title: "Card 12 (Exercise 9.1 Q5): Flying Kite String Length",
+                problem: "A kite is flying at a height of 60 m. String attached is inclined at 60° to the ground. Find length of string.",
+                step1: {
+                    prompt: "Select the diagram showing height = 60 m, angle = 60°, and string length L:",
+                    diagrams: [
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 'Base', height: '60 m', hyp: 'String L'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'Base', height: '60 m'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '60 m', height: 'L'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Formulate sine ratio equation for string length L: sin 60° = 60 / L:",
+                    options: [
+                        "√3 / 2 = 60 / L",
+                        "1 / 2 = 60 / L",
+                        "√3 = 60 / L",
+                        "1 / √3 = 60 / L"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Solve L = 120 / √3 = [ _____ ] m.",
+                    options: ["60 m", "40√3 m", "120 m", "20√3 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) sin 60° = 60 / L ⇒ √3/2 = 60 / L.<br>2) L = 120 / √3 = 40√3 m."
+            },
+            // Card 13
+            {
+                id: 13,
+                title: "Card 13 (Exercise 9.1 Q6): Boy Walking Towards Building",
+                problem: "A 1.5 m boy walks towards a 30 m building (eye height level = 28.5 m). Elevation angle increases from 30° to 60°.",
+                step1: {
+                    prompt: "Select the diagram showing eye level height 28.5 m and angles 30° & 60°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°', dist: 'Walked d', h: '28.5m'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'd', height: '30m'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 'd', height: '28.5m'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Initial distance = 28.5 / tan 30° = 28.5√3 m. Final distance = 28.5 / tan 60° = 28.5 / √3 m. Walked distance = 28.5√3 - 28.5 / √3:",
+                    options: [
+                        "Distance = 28.5(√3 - 1/√3) = 28.5(2/√3) m",
+                        "Distance = 28.5√3 m",
+                        "Distance = 15√3 m",
+                        "Distance = 28.5 / √3 m"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Calculate distance = 57 / √3 = [ _____ ] m.",
+                    options: ["19 m", "19√3 m", "28.5 m", "9.5√3 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) Eye height = 30 - 1.5 = 28.5 m.<br>2) Distance = 28.5√3 - 9.5√3 = 19√3 m."
+            },
+            // Card 14
+            {
+                id: 14,
+                title: "Card 14 (Exercise 9.1 Q7): Transmission Tower on Building",
+                problem: "From ground point, angles of elevation of bottom and top of transmission tower on 20 m building are 45° and 60°.",
+                step1: {
+                    prompt: "Select the diagram showing building = 20 m, tower h, and angles 45° & 60°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°', dist: '20 m', h: '20+h'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '20m', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '20m', height: '20m'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Ground distance = 20 / tan 45° = 20 m. Total height = 20 tan 60° = 20√3 m. Tower height h = 20√3 - 20:",
+                    options: [
+                        "h = 20(√3 - 1) m",
+                        "h = 20(√3 + 1) m",
+                        "h = 20 m",
+                        "h = 10√3 m"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Calculate tower height h = [ _____ ] m.",
+                    options: ["20 m", "20(√3 - 1) m", "20(√3 + 1) m", "14.64 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) Base distance = 20 m.<br>2) Total height = 20√3 m.<br>3) Tower height = 20(√3 - 1) m."
+            },
+            // Card 15
+            {
+                id: 15,
+                title: "Card 15 (Exercise 9.1 Q8): Statue on Pedestal",
+                problem: "A 1.6 m statue stands on top of pedestal. From ground point, elevation of top of statue is 60°, top of pedestal is 45°.",
+                step1: {
+                    prompt: "Select the diagram showing pedestal h, statue 1.6 m, and angles 45° & 60°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°', dist: 'h', h: 'h+1.6'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '1.6m', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 'h', height: '1.6m'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Ground distance = h. tan 60° = (h + 1.6) / h  ⇒  √3 h = h + 1.6  ⇒  h(√3 - 1) = 1.6:",
+                    options: [
+                        "h = 1.6 / (√3 - 1)",
+                        "h = 1.6 / (√3 + 1)",
+                        "h = 1.6√3",
+                        "h = 1.6 - √3"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Rationalize h = 1.6(√3 + 1) / 2 = [ _____ ] m.",
+                    options: ["0.8 m", "0.8(√3 + 1) m", "1.6√3 m", "0.8(√3 - 1) m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) h(√3 - 1) = 1.6.<br>2) h = 1.6(√3 + 1) / 2 = 0.8(√3 + 1) m."
+            },
+            // Card 16
+            {
+                id: 16,
+                title: "Card 16 (Exercise 9.1 Q9): Building & 50m Tower",
+                problem: "Elevation of top of building from foot of tower is 30°. Elevation of top of tower (50 m high) from foot of building is 60°.",
+                step1: {
+                    prompt: "Select the diagram showing 50 m tower, building h, and elevation angles 30° & 60°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°', dist: 'd', h: '50m'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '50m', height: 'h'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 'd', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Ground distance d = 50 / tan 60° = 50 / √3 m. Building height h = d tan 30°:",
+                    options: [
+                        "h = (50 / √3) × (1 / √3)",
+                        "h = (50 / √3) × √3",
+                        "h = 50 × √3",
+                        "h = 50 / 2"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Calculate building height h = 50 / 3 = [ _____ ] m.",
+                    options: ["16 m", "16(2/3) m", "25 m", "10√3 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) d = 50 / √3 m.<br>2) Building height h = (50 / √3) × (1 / √3) = 50/3 = 16(2/3) m."
+            },
+            // Card 17
+            {
+                id: 17,
+                title: "Card 17 (Exercise 9.1 Q10): Two Equal Poles Across 80m Road",
+                problem: "Two poles of equal height h stand opposite each other on an 80 m road. Point between them has elevations 60° and 30°.",
+                step1: {
+                    prompt: "Select diagram showing equal poles h, road = 80 m, and angles 60° & 30° from road point:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '60°', a2: '30°', dist: '80 m', h: 'h'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '80m', height: 'h'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '40m', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '45°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Let distance from 60° pole = x. h = x tan 60° = x√3, and h = (80 - x) tan 30° = (80 - x)/√3. Equating both: x√3 = (80 - x)/√3:",
+                    options: [
+                        "3x = 80 - x",
+                        "x = 80 - 3x",
+                        "2x = 80",
+                        "x√3 = 80"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Solve 4x = 80  ⇒  x = 20 m. Distances from poles = 20 m and [ _____ ] m; Pole height = 20√3 m.",
+                    options: ["40 m", "60 m", "20 m", "50 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) 4x = 80 ⇒ x = 20 m, 80 - x = 60 m.<br>2) Pole height = 20√3 m."
+            },
+            // Card 18
+            {
+                id: 18,
+                title: "Card 18 (Exercise 9.1 Q11): TV Tower & Canal Width",
+                problem: "A TV tower stands on canal bank. Elevation from opposite bank is 60°. From 20 m further, elevation is 30°.",
+                step1: {
+                    prompt: "Select diagram showing TV tower h, canal width x, 20 m extension, and angles 60° & 30°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°', dist: '20 m', h: 'Tower h'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '20m', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'x', height: 'h'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "h = x√3. tan 30° = h / (x + 20)  ⇒  1/√3 = (x√3) / (x + 20)  ⇒  x + 20 = 3x:",
+                    options: [
+                        "2x = 20",
+                        "3x = 20",
+                        "x = 20",
+                        "4x = 20"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Solve 2x = 20  ⇒  canal width x = [ _____ ] m; Tower height = 10√3 m.",
+                    options: ["20 m", "10 m", "10√3 m", "15 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) x + 20 = 3x ⇒ 2x = 20 ⇒ x = 10 m.<br>2) Tower height h = 10√3 m."
+            },
+            // Card 19
+            {
+                id: 19,
+                title: "Card 19 (Exercise 9.1 Q12): Cable Tower from 7m Building",
+                problem: "From top of 7 m building, elevation of top of cable tower is 60°, depression of foot is 45°.",
+                step1: {
+                    prompt: "Select diagram showing building = 7 m, cable tower, elevation 60°, depression 45°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°', dist: '7 m', h: 'Tower'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '7m', height: 'Tower'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '7m', height: 'Tower'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Base distance = 7 / tan 45° = 7 m. Upper tower height = 7 tan 60° = 7√3 m. Total tower height = 7 + 7√3:",
+                    options: [
+                        "Total Height = 7(√3 + 1) m",
+                        "Total Height = 7(√3 - 1) m",
+                        "Total Height = 14 m",
+                        "Total Height = 7√3 m"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Calculate total tower height = 7(√3 + 1) = [ _____ ] m.",
+                    options: ["7 m", "7(√3 + 1) m", "14 m", "19.12 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) Base distance = 7 m.<br>2) Upper height = 7√3 m.<br>3) Total Tower Height = 7(√3 + 1) m."
+            },
+            // Card 20
+            {
+                id: 20,
+                title: "Card 20 (Exercise 9.1 Q13): Two Ships from 75m Lighthouse",
+                problem: "From 75 m lighthouse top, depression angles of two ships behind each other are 30° and 45°.",
+                step1: {
+                    prompt: "Select diagram showing 75 m lighthouse and ship depression angles 30° & 45°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '45°', dist: 'd', h: '75m'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '75m', height: '75m'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '60°', a2: '30°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '75m', height: '75m'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Ship 1 distance = 75 / tan 45° = 75 m. Ship 2 distance = 75 / tan 30° = 75√3 m. Distance between ships = 75√3 - 75:",
+                    options: [
+                        "Distance = 75(√3 - 1) m",
+                        "Distance = 75(√3 + 1) m",
+                        "Distance = 75√3 m",
+                        "Distance = 150 m"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Calculate distance between ships = 75(√3 - 1) = [ _____ ] m.",
+                    options: ["75 m", "75(√3 - 1) m", "75√3 m", "54.9 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) Distance = 75√3 - 75 = 75(√3 - 1) m."
+            },
+            // Card 21
+            {
+                id: 21,
+                title: "Card 21 (Exercise 9.1 Q14): Moving Balloon",
+                problem: "A 1.2 m girl spots a balloon at 88.2 m height. Elevation angle reduces from 60° to 30°. Find distance travelled.",
+                step1: {
+                    prompt: "Select diagram showing balloon height above eye level = 87 m and angles 60° & 30°:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°', dist: 'Travelled d', h: '87m'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 'd', height: '88.2m'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: 'd', height: '87m'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Height above eye level = 88.2 - 1.2 = 87 m. Initial dist = 87 / tan 60° = 29√3 m. Final dist = 87 / tan 30° = 87√3 m. Distance travelled = 87√3 - 29√3:",
+                    options: [
+                        "Distance = 58√3 m",
+                        "Distance = 29√3 m",
+                        "Distance = 87 m",
+                        "Distance = 58 m"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Calculate distance travelled = 58√3 = [ _____ ] m.",
+                    options: ["29√3 m", "58√3 m", "87 m", "100.45 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) Height above eye = 87 m.<br>2) Distance travelled = 87√3 - 29√3 = 58√3 m."
+            },
+            // Card 22
+            {
+                id: 22,
+                title: "Card 22 (Exercise 9.1 Q15): Approaching Car Speed",
+                problem: "A man on a tower sees a car at 30° depression. 6 seconds later, depression is 60°. Find time to reach tower foot.",
+                step1: {
+                    prompt: "Select diagram showing tower h, car moving between 30° and 60° positions in 6 s:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°', dist: '6 s travel', h: 'Tower h'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '30°', base: '6s', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '45°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: 't', height: 'h'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "Let distance from 60° point to foot = x. Distance in 6 s = 2x. Since speed is uniform, ratio of time to distance is constant:",
+                    options: [
+                        "Time for x = 6 / 2 = 3 seconds",
+                        "Time for x = 6 × 2 = 12 seconds",
+                        "Time for x = 6 seconds",
+                        "Time for x = 6 / 3 = 2 seconds"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Calculate remaining time = [ _____ ] seconds.",
+                    options: ["6 sec", "3 sec", "9 sec", "12 sec"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) Distance covered in 6 s = 2x.<br>2) Remaining distance = x.<br>3) Time taken = 6 / 2 = 3 seconds."
+            },
+            // Card 23
+            {
+                id: 23,
+                title: "Card 23 (Exercise 9.1 Q16): Complementary Angles Tower Proof",
+                problem: "Elevations of top of tower from points 4 m and 9 m away are complementary (θ and 90°-θ). Prove height is 6 m.",
+                step1: {
+                    prompt: "Select diagram showing tower h and base points 4 m and 9 m with complementary angles θ & 90°-θ:",
+                    diagrams: [
+                        { svg: makeSVG('double_triangle', {a1: 'θ', a2: '90°-θ', dist: '9m / 4m', h: 'h'}), correct: true },
+                        { svg: makeSVG('right_triangle', {angle: '45°', base: '4m', height: 'h'}), correct: false },
+                        { svg: makeSVG('double_triangle', {a1: '30°', a2: '60°'}), correct: false },
+                        { svg: makeSVG('right_triangle', {angle: '60°', base: '9m', height: 'h'}), correct: false }
+                    ]
+                },
+                step2: {
+                    prompt: "tan θ = h / 9 and tan(90°-θ) = cot θ = h / 4. Multiply both equations: tan θ · cot θ = (h/9)(h/4):",
+                    options: [
+                        "1 = h<sup>2</sup> / 36",
+                        "1 = 2h / 13",
+                        "h = 36",
+                        "1 = h / 36"
+                    ],
+                    correct: 0
+                },
+                step3: {
+                    prompt: "Solve 1 = h<sup>2</sup> / 36  ⇒  h<sup>2</sup> = 36  ⇒  h = [ _____ ] m.",
+                    options: ["36 m", "6 m", "13 m", "5 m"],
+                    correct: 1
+                },
+                rationale: "<b>Full Solution Summary:</b><br>1) tan θ · cot θ = 1.<br>2) (h/9) × (h/4) = 1 ⇒ h<sup>2</sup> = 36 ⇒ h = 6 m."
+            }
+        ];
+
+        let currentUser = null;
+        let currentQIndex = 0;
+        let userState = { answers: {}, status: {}, videoApproved: false, cardSteps: {} };
+
+        // Calculator Functions
+        function calcInput(val) {
+            const d = document.getElementById('calc-disp');
+            if (d.value === '0' || d.value === 'Error') d.value = val;
+            else d.value += val;
+        }
+
+        function calcVal(num) {
+            const d = document.getElementById('calc-disp');
+            if (d.value === '0' || d.value === 'Error') d.value = num;
+            else d.value += num;
+        }
+
+        function calcClear() {
+            document.getElementById('calc-disp').value = '0';
+        }
+
+        function calcEval() {
+            const d = document.getElementById('calc-disp');
+            try {
+                d.value = eval(d.value);
+            } catch(e) {
+                d.value = 'Error';
+            }
+        }
+
+        function calcSqrt() {
+            const d = document.getElementById('calc-disp');
+            try {
+                const val = parseFloat(d.value) || 0;
+                d.value = Number(Math.sqrt(val).toFixed(4));
+            } catch(e) {
+                d.value = 'Error';
+            }
+        }
+
+        function calcTrig(type) {
+            const d = document.getElementById('calc-disp');
+            const rad = (parseFloat(d.value) || 0) * (Math.PI / 180);
+            let res = 0;
+            if (type === 'sin') res = Math.sin(rad);
+            if (type === 'cos') res = Math.cos(rad);
+            if (type === 'tan') res = Math.tan(rad);
+            d.value = Number(res.toFixed(4));
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value.trim();
+            if (email) {
+                currentUser = email;
+                localStorage.setItem('bm_user_email', email);
+                initSession();
+            }
+        }
+
+        function initSession() {
+            document.getElementById('display-user-email').innerText = currentUser;
+            document.getElementById('user-header-info').style.display = 'flex';
+
+            const savedData = localStorage.getItem(`${currentUser}_${CHAPTER_KEY}`);
+            if (savedData) {
+                userState = JSON.parse(savedData);
+            } else {
+                userState = { answers: {}, status: {}, videoApproved: false, cardSteps: {} };
+            }
+
+            if (!userState.videoApproved) {
+                switchScreen('video-screen');
+            } else {
+                startQuizScreen();
+            }
+        }
+
+        function approveVideoAndStart() {
+            userState.videoApproved = true;
+            saveState();
+            startQuizScreen();
+        }
+
+        function startQuizScreen() {
+            switchScreen('quiz-screen');
+            renderGrid();
+            loadQuestion(0);
+        }
+
+        function logout() {
+            localStorage.removeItem('bm_user_email');
+            currentUser = null;
+            document.getElementById('user-header-info').style.display = 'none';
+            switchScreen('auth-screen');
+        }
+
+        function saveState() {
+            if (currentUser) {
+                localStorage.setItem(`${currentUser}_${CHAPTER_KEY}`, JSON.stringify(userState));
+            }
+        }
+
+        function switchScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            questionsData.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'grid-btn';
+                btn.innerText = idx + 1;
+
+                if (idx === currentQIndex) btn.classList.add('active');
+                if (userState.status[idx] === 'submitted') btn.classList.add('attempted');
+                if (userState.status[idx] === 'skipped') btn.classList.add('skipped');
+
+                btn.onclick = () => jumpToQuestion(idx);
+                grid.appendChild(btn);
+            });
+        }
+
+        function loadQuestion(index) {
+            currentQIndex = index;
+            const q = questionsData[index];
+
+            document.getElementById('q-number-badge').innerText = `Card ${index + 1} of ${questionsData.length}`;
+            document.getElementById('q-title-text').innerHTML = q.title;
+            document.getElementById('q-problem-text').innerHTML = q.problem;
+
+            if (!userState.cardSteps[index]) {
+                userState.cardSteps[index] = {
+                    s1Selection: null, s1Status: 'unattempted',
+                    s2Selection: null, s2Status: 'unattempted',
+                    s3Selection: null, s3Status: 'unattempted'
+                };
+            }
+
+            const cState = userState.cardSteps[index];
+
+            // Render all 3 Step blocks
+            renderStep1UI(q, cState);
+            renderStep2UI(q, cState);
+            renderStep3UI(q, cState);
+
+            const isCardFinished = userState.status[index] === 'submitted' || userState.status[index] === 'skipped';
+            const ratBox = document.getElementById('rationale-container');
+
+            if (isCardFinished) {
+                ratBox.style.display = 'block';
+                document.getElementById('rationale-text').innerHTML = q.rationale;
+                document.getElementById('skip-card-btn').style.display = 'none';
+                document.getElementById('next-btn').style.display = 'inline-flex';
+            } else {
+                ratBox.style.display = 'none';
+                document.getElementById('skip-card-btn').style.display = 'inline-flex';
+                document.getElementById('next-btn').style.display = 'none';
+            }
+
+            renderGrid();
+        }
+
+        // STEP 1 UI RENDER
+        function renderStep1UI(q, cState) {
+            const s1Block = document.getElementById('step1-block');
+            const grid = document.getElementById('step1-diagram-grid');
+            const tag = document.getElementById('step1-status-tag');
+            const actions = document.getElementById('step1-actions');
+            grid.innerHTML = '';
+
+            if (cState.s1Status === 'correct') {
+                s1Block.className = 'step-block completed-step';
+                tag.innerText = '✓ Correct';
+                tag.style.color = 'var(--correct-green)';
+                actions.style.display = 'none';
+            } else if (cState.s1Status === 'skipped') {
+                s1Block.className = 'step-block skipped-step';
+                tag.innerText = 'Skipped';
+                tag.style.color = 'var(--skipped-orange)';
+                actions.style.display = 'none';
+            } else {
+                s1Block.className = 'step-block active-step';
+                tag.innerText = 'In Progress';
+                tag.style.color = 'var(--accent-gold)';
+                actions.style.display = 'flex';
+            }
+
+            q.step1.diagrams.forEach((d, idx) => {
+                const item = document.createElement('div');
+                item.className = 'diagram-option';
+
+                if (cState.s1Selection === idx) item.classList.add('selected');
+
+                if (cState.s1Status !== 'unattempted' && cState.s1Status !== 'incorrect') {
+                    item.classList.add('disabled');
+                    if (d.correct) item.classList.add('correct');
+                    else if (cState.s1Selection === idx) item.classList.add('incorrect');
+                } else if (cState.s1Status === 'incorrect' && cState.s1Selection === idx) {
+                    item.classList.add('incorrect');
+                    item.onclick = () => selectStep1Selection(idx);
+                } else {
+                    item.onclick = () => selectStep1Selection(idx);
+                }
+
+                item.innerHTML = `<div style="font-size:0.8rem; font-weight:700; margin-bottom:0.25rem;">Option ${String.fromCharCode(65 + idx)}</div>${d.svg}`;
+                grid.appendChild(item);
+            });
+        }
+
+        function selectStep1Selection(idx) {
+            const cState = userState.cardSteps[currentQIndex];
+            if (cState.s1Status === 'correct' || cState.s1Status === 'skipped') return;
+            cState.s1Selection = idx;
+            cState.s1Status = 'unattempted';
+            saveState();
+            loadQuestion(currentQIndex);
+        }
+
+        // STEP 2 UI RENDER
+        function renderStep2UI(q, cState) {
+            const s2Block = document.getElementById('step2-block');
+            const container = document.getElementById('step2-options-container');
+            const tag = document.getElementById('step2-status-tag');
+            const actions = document.getElementById('step2-actions');
+            container.innerHTML = '';
+
+            const isStep1Passed = cState.s1Status === 'correct' || cState.s1Status === 'skipped';
+
+            if (!isStep1Passed) {
+                s2Block.className = 'step-block locked';
+                tag.innerText = 'Locked';
+                tag.style.color = 'var(--text-muted)';
+                actions.style.display = 'none';
+                return;
+            }
+
+            if (cState.s2Status === 'correct') {
+                s2Block.className = 'step-block completed-step';
+                tag.innerText = '✓ Correct';
+                tag.style.color = 'var(--correct-green)';
+                actions.style.display = 'none';
+            } else if (cState.s2Status === 'skipped') {
+                s2Block.className = 'step-block skipped-step';
+                tag.innerText = 'Skipped';
+                tag.style.color = 'var(--skipped-orange)';
+                actions.style.display = 'none';
+            } else {
+                s2Block.className = 'step-block active-step';
+                tag.innerText = 'In Progress';
+                tag.style.color = 'var(--accent-gold)';
+                actions.style.display = 'flex';
+            }
+
+            q.step2.options.forEach((optText, idx) => {
+                const item = document.createElement('div');
+                item.className = 'step-option-item';
+
+                if (cState.s2Selection === idx) item.classList.add('selected');
+
+                if (cState.s2Status !== 'unattempted' && cState.s2Status !== 'incorrect') {
+                    item.classList.add('disabled');
+                    if (idx === q.step2.correct) item.classList.add('correct');
+                    else if (cState.s2Selection === idx) item.classList.add('incorrect');
+                } else if (cState.s2Status === 'incorrect' && cState.s2Selection === idx) {
+                    item.classList.add('incorrect');
+                    item.onclick = () => selectStep2Selection(idx);
+                } else {
+                    item.onclick = () => selectStep2Selection(idx);
+                }
+
+                item.innerHTML = `<div class="step-opt-prefix">${String.fromCharCode(65 + idx)}</div><div>${optText}</div>`;
+                container.appendChild(item);
+            });
+        }
+
+        function selectStep2Selection(idx) {
+            const cState = userState.cardSteps[currentQIndex];
+            if (cState.s2Status === 'correct' || cState.s2Status === 'skipped') return;
+            cState.s2Selection = idx;
+            cState.s2Status = 'unattempted';
+            saveState();
+            loadQuestion(currentQIndex);
+        }
+
+        // STEP 3 UI RENDER
+        function renderStep3UI(q, cState) {
+            const s3Block = document.getElementById('step3-block');
+            const container = document.getElementById('step3-options-container');
+            const tag = document.getElementById('step3-status-tag');
+            const actions = document.getElementById('step3-actions');
+            container.innerHTML = '';
+
+            const isStep2Passed = cState.s2Status === 'correct' || cState.s2Status === 'skipped';
+
+            if (!isStep2Passed) {
+                s3Block.className = 'step-block locked';
+                tag.innerText = 'Locked';
+                tag.style.color = 'var(--text-muted)';
+                actions.style.display = 'none';
+                return;
+            }
+
+            if (cState.s3Status === 'correct') {
+                s3Block.className = 'step-block completed-step';
+                tag.innerText = '✓ Correct';
+                tag.style.color = 'var(--correct-green)';
+                actions.style.display = 'none';
+            } else if (cState.s3Status === 'skipped') {
+                s3Block.className = 'step-block skipped-step';
+                tag.innerText = 'Skipped';
+                tag.style.color = 'var(--skipped-orange)';
+                actions.style.display = 'none';
+            } else {
+                s3Block.className = 'step-block active-step';
+                tag.innerText = 'In Progress';
+                tag.style.color = 'var(--accent-gold)';
+                actions.style.display = 'flex';
+            }
+
+            q.step3.options.forEach((optText, idx) => {
+                const item = document.createElement('div');
+                item.className = 'step-option-item';
+
+                if (cState.s3Selection === idx) item.classList.add('selected');
+
+                if (cState.s3Status !== 'unattempted' && cState.s3Status !== 'incorrect') {
+                    item.classList.add('disabled');
+                    if (idx === q.step3.correct) item.classList.add('correct');
+                    else if (cState.s3Selection === idx) item.classList.add('incorrect');
+                } else if (cState.s3Status === 'incorrect' && cState.s3Selection === idx) {
+                    item.classList.add('incorrect');
+                    item.onclick = () => selectStep3Selection(idx);
+                } else {
+                    item.onclick = () => selectStep3Selection(idx);
+                }
+
+                item.innerHTML = `<div class="step-opt-prefix">${String.fromCharCode(65 + idx)}</div><div>${optText}</div>`;
+                container.appendChild(item);
+            });
+        }
+
+        function selectStep3Selection(idx) {
+            const cState = userState.cardSteps[currentQIndex];
+            if (cState.s3Status === 'correct' || cState.s3Status === 'skipped') return;
+            cState.s3Selection = idx;
+            cState.s3Status = 'unattempted';
+            saveState();
+            loadQuestion(currentQIndex);
+        }
+
+        // STEP ACTIONS: CHECK & SKIP LOGIC
+        function checkStep(stepNum) {
+            const q = questionsData[currentQIndex];
+            const cState = userState.cardSteps[currentQIndex];
+
+            if (stepNum === 1) {
+                if (cState.s1Selection === null) {
+                    alert("Please select a diagram option for Step 1 first!");
+                    return;
+                }
+                if (q.step1.diagrams[cState.s1Selection].correct) {
+                    cState.s1Status = 'correct';
+                    AudioFX.playCorrectBell();
+                } else {
+                    cState.s1Status = 'incorrect';
+                    AudioFX.playIncorrectBell();
+                }
+            } else if (stepNum === 2) {
+                if (cState.s2Selection === null) {
+                    alert("Please select an equation option for Step 2 first!");
+                    return;
+                }
+                if (cState.s2Selection === q.step2.correct) {
+                    cState.s2Status = 'correct';
+                    AudioFX.playCorrectBell();
+                } else {
+                    cState.s2Status = 'incorrect';
+                    AudioFX.playIncorrectBell();
+                }
+            } else if (stepNum === 3) {
+                if (cState.s3Selection === null) {
+                    alert("Please select a calculation option for Step 3 first!");
+                    return;
+                }
+                if (cState.s3Selection === q.step3.correct) {
+                    cState.s3Status = 'correct';
+                    userState.status[currentQIndex] = 'submitted';
+                    userState.answers[currentQIndex] = cState.s3Selection;
+                    AudioFX.playCorrectBell();
+                } else {
+                    cState.s3Status = 'incorrect';
+                    AudioFX.playIncorrectBell();
+                }
+            }
+            saveState();
+            loadQuestion(currentQIndex);
+        }
+
+        function skipStep(stepNum) {
+            const cState = userState.cardSteps[currentQIndex];
+
+            if (stepNum === 1) {
+                cState.s1Status = 'skipped';
+                AudioFX.playSkipChime();
+            } else if (stepNum === 2) {
+                cState.s2Status = 'skipped';
+                AudioFX.playSkipChime();
+            } else if (stepNum === 3) {
+                cState.s3Status = 'skipped';
+                userState.status[currentQIndex] = 'submitted';
+                AudioFX.playSkipChime();
+            }
+            saveState();
+            loadQuestion(currentQIndex);
+        }
+
+        function skipEntireCard() {
+            const cState = userState.cardSteps[currentQIndex];
+            cState.s1Status = 'skipped';
+            cState.s2Status = 'skipped';
+            cState.s3Status = 'skipped';
+            userState.status[currentQIndex] = 'skipped';
+            saveState();
+            AudioFX.playSkipChime();
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQIndex < questionsData.length - 1) {
+                loadQuestion(currentQIndex + 1);
+            } else {
+                finishTest();
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            loadQuestion(idx);
+        }
+
+        function finishTest() {
+            switchScreen('review-screen');
+            let score = 0;
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+
+            questionsData.forEach((q, idx) => {
+                const status = userState.status[idx];
+                const cState = userState.cardSteps[idx] || {};
+                const isFullyCorrect = cState.s1Status === 'correct' && cState.s2Status === 'correct' && cState.s3Status === 'correct';
+
+                if (isFullyCorrect) score++;
+
+                const card = document.createElement('div');
+                card.className = 'review-card';
+
+                let tagHtml = '<span class="status-tag tag-skipped">Skipped</span>';
+                if (status === 'submitted') {
+                    tagHtml = isFullyCorrect 
+                        ? '<span class="status-tag tag-correct">Fully Correct</span>' 
+                        : '<span class="status-tag tag-incorrect">Completed with Help</span>';
+                }
+
+                const s3Answer = cState.s3Selection !== null ? q.step3.options[cState.s3Selection] : 'None';
+                const s3Correct = q.step3.options[q.step3.correct];
+
+                card.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+                        <strong>${q.title}</strong>
+                        ${tagHtml}
+                    </div>
+                    <p style="font-size:0.9rem; margin-bottom:0.5rem;">${q.problem}</p>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">
+                        <strong>Your Step 3 Answer:</strong> ${s3Answer} | 
+                        <strong>Correct Step 3 Answer:</strong> ${s3Correct}
+                    </p>
+                    <div style="margin-top:0.5rem; font-size:0.85rem; background:#f8fafc; padding:0.5rem; border-radius:4px;">
+                        <strong>Solution Rationale:</strong> ${q.rationale}
+                    </div>
+                `;
+                reviewList.appendChild(card);
+            });
+
+            document.getElementById('final-score').innerText = `${score} / ${questionsData.length}`;
+        }
+
+        function restartQuiz() {
+            userState = { answers: {}, status: {}, videoApproved: true, cardSteps: {} };
+            saveState();
+            startQuizScreen();
+        }
+
+        window.onload = function() {
+            const savedUser = localStorage.getItem('bm_user_email');
+            if (savedUser) {
+                currentUser = savedUser;
+                initSession();
+            }
+        };
+    </script>
+</body>
+</html>
